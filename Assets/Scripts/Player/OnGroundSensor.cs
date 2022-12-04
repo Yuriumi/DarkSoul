@@ -16,14 +16,18 @@ public class OnGroundSensor : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     private void Update()
     {
         if (IsOnGrounded)
         {
-            Debug.Log("OnGround");
+            SendMessageUpwards("IsGround");
+        }
+        else
+        {
+            SendMessageUpwards("IsNotGround");
         }
     }
 

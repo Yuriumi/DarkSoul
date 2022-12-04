@@ -54,6 +54,7 @@ public class ActorControl : MonoBehaviour
         rigidbody.MovePosition(rigidbody.position += planarVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
     }
 
+    #region Message block
     public void OnJumpEnter()
     {
         playerInput.inputEnable = false;
@@ -61,9 +62,26 @@ public class ActorControl : MonoBehaviour
         rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
     
-    public void OnJumpExit()
+    //public void OnJumpExit()
+    //{
+    //    playerInput.inputEnable = true;
+    //    lockPlanar = false;
+    //}
+
+    public void IsGround()
+    {
+        animator.SetBool("isGround", true);
+    }
+    
+    public void IsNotGround()
+    {
+        animator.SetBool("isGround", false);
+    }
+
+    public void OnGroundEnter()
     {
         playerInput.inputEnable = true;
         lockPlanar = false;
     }
+    #endregion
 }
