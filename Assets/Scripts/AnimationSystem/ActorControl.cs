@@ -17,6 +17,7 @@ public class ActorControl : MonoBehaviour
 
     private void Update()
     {
-        animator.SetFloat("forward", playerInput.Dup);
+        animator.SetFloat("forward",playerInput.Dmag);
+        playerModel.transform.forward = playerInput.Dvec;
     }
 }

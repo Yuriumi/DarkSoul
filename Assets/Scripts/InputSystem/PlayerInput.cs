@@ -12,6 +12,9 @@ public class PlayerInput : MonoBehaviour
     public float Dup;
     public float Dright;
 
+    public float Dmag;
+    public Vector3 Dvec;
+
     private float targetDup;
     private float targetDright;
     private float velocityDup;
@@ -28,7 +31,7 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         targetDup = (Input.GetKey(keyUp)? 1.0f:0) - (Input.GetKey(keyDown)? 1.0f : 0);
-        targetDright = (Input.GetKey(keyLeft)? 1.0f:0) - (Input.GetKey(keyRight)? 1.0f : 0);
+        targetDright = (Input.GetKey(keyRight)? 1.0f:0) - (Input.GetKey(keyLeft)? 1.0f : 0);
 
         if (inputEnable == false)
         {
@@ -38,5 +41,8 @@ public class PlayerInput : MonoBehaviour
 
         Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, smoothTime);
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, smoothTime);
+
+        Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
+        Dvec = Dright * transform.right + Dup * transform.forward;
     }
 }
