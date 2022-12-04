@@ -638,7 +638,7 @@ MonoBehaviour:
   keyRight: d
   keyDown: s
   keyRun: left shift
-  keyB: 
+  keyJump: space
   keyC: 
   keyD: 
   Dup: 0
@@ -646,6 +646,7 @@ MonoBehaviour:
   Dmag: 0
   Dvec: {x: 0, y: 0, z: 0}
   run: 0
+  jump: 0
   inputEnable: 1
   smoothTime: 0.2
 --- !u!54 &1801932822

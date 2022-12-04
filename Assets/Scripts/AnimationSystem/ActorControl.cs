@@ -26,6 +26,10 @@ public class ActorControl : MonoBehaviour
     {
         targetRunScale = playerInput.run ? runSpeedScale : 1.0f;
         animator.SetFloat("forward", playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"),targetRunScale,0.1f));
+        if (playerInput.jump)
+        {
+            animator.SetTrigger("jump");
+        }
 
         if (playerInput.Dmag > 0.1f)
         {

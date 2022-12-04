@@ -11,7 +11,7 @@ public class PlayerInput : MonoBehaviour
     public string keyDown = "s";
 
     public string keyRun;
-    public string keyB;
+    public string keyJump;
     public string keyC;
     public string keyD;
 
@@ -25,6 +25,7 @@ public class PlayerInput : MonoBehaviour
     // 1.Pressing singnal
     public bool run;
     // 2.trigger once signal
+    public bool jump;
     // 3.double trigger
 
     [Header("==== Other ====")]
@@ -60,5 +61,7 @@ public class PlayerInput : MonoBehaviour
         Dvec = Dright * transform.right + Dup * transform.forward;
 
         run = Input.GetKey(keyRun);
+
+        jump = Input.GetKeyDown(keyJump);
     }
 }
