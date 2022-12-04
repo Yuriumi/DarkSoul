@@ -13,6 +13,7 @@ public class ActorControl : MonoBehaviour
     new private Rigidbody rigidbody;
     private Vector3 movingVec;
     private Vector3 moveVelocity;
+    private float targetRunScale;
 
     private void Awake()
     {
@@ -23,11 +24,12 @@ public class ActorControl : MonoBehaviour
 
     private void Update()
     {
-        animator.SetFloat("forward", playerInput.Dmag * (playerInput.run ? runSpeedScale : 1.0f));
+        targetRunScale = playerInput.run ? runSpeedScale : 1.0f;
+        animator.SetFloat("forward", playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"),targetRunScale,0.1f));
 
         if (playerInput.Dmag > 0.1f)
         {
-            playerModel.transform.forward = playerInput.Dvec;
+            playerModel.transform.forward = Vector3.Slerp(playerModel.transform.forward, playerInput.Dvec, 0.1f);
         }
 
         movingVec = playerInput.Dmag * playerModel.transform.forward;
@@ -35,8 +37,8 @@ public class ActorControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // rigidbody.position += movingVec * Time.fixedDeltaTime * walkSpeed;
-        moveVelocity.Set(movingVec.x, rigidbody.velocity.y, movingVec.z);
-        rigidbody.velocity = moveVelocity * walkSpeed * (playerInput.run? runSpeedScale : 1.0f);
+        //moveVelocity.Set(movingVec.x, rigidbody.velocity.y, movingVec.z);
+        //rigidbody.velocity = moveVelocity * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f);
+        rigidbody.MovePosition(rigidbody.position += movingVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
     }
 }
