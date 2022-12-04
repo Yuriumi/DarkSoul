@@ -11,9 +11,12 @@ public class ActorControl : MonoBehaviour
 
     private Animator animator;
     new private Rigidbody rigidbody;
-    private Vector3 movingVec;
+    private Vector3 planarVec;
     private Vector3 moveVelocity;
     private float targetRunScale;
+    [SerializeField] private float jumpForce = 5;
+
+    private bool lockPlanar = false;
 
     private void Awake()
     {
@@ -36,13 +39,31 @@ public class ActorControl : MonoBehaviour
             playerModel.transform.forward = Vector3.Slerp(playerModel.transform.forward, playerInput.Dvec, 0.1f);
         }
 
-        movingVec = playerInput.Dmag * playerModel.transform.forward;
+        if (lockPlanar == false)
+        {
+            planarVec = playerInput.Dmag * playerModel.transform.forward;
+        }
+
+        //planarVec = playerInput.Dmag * playerModel.transform.forward;
     }
 
     private void FixedUpdate()
     {
         //moveVelocity.Set(movingVec.x, rigidbody.velocity.y, movingVec.z);
         //rigidbody.velocity = moveVelocity * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f);
-        rigidbody.MovePosition(rigidbody.position += movingVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
+        rigidbody.MovePosition(rigidbody.position += planarVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
+    }
+
+    public void OnJumpEnter()
+    {
+        playerInput.inputEnable = false;
+        lockPlanar = true;
+        rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+    
+    public void OnJumpExit()
+    {
+        playerInput.inputEnable = true;
+        lockPlanar = false;
     }
 }

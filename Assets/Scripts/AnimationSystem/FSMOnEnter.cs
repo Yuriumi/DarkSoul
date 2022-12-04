@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSM : StateMachineBehaviour
+public class FSMOnEnter : StateMachineBehaviour
 {
+    public string[] onEnterMessage;
 
-    public string[] ClearAtEnter;
-    public string[] ClearAtExit;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // TODO: 优化
-
-        foreach (var signal in ClearAtEnter)
+        foreach (var msg in onEnterMessage)
         {
-            animator.ResetTrigger(signal);
+            // 向父物体发送信息(调用)
+            animator.gameObject.SendMessageUpwards(msg);
         }
     }
 
@@ -27,10 +26,7 @@ public class FSM : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    foreach (var signal in ClearAtExit)
-    //    {
-    //        animator.ResetTrigger(signal);
-    //    }
+    //    
     //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSM : StateMachineBehaviour
+public class FSMOnExit : StateMachineBehaviour
 {
+    public string[] onExitMessage;
 
-    public string[] ClearAtEnter;
-    public string[] ClearAtExit;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        // TODO: 优化
-
-        foreach (var signal in ClearAtEnter)
-        {
-            animator.ResetTrigger(signal);
-        }
-    }
+    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -25,13 +19,14 @@ public class FSM : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    foreach (var signal in ClearAtExit)
-    //    {
-    //        animator.ResetTrigger(signal);
-    //    }
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        // TODO:优化
+        foreach (var msg in onExitMessage)
+        {
+            animator.gameObject.SendMessageUpwards(msg);
+        }
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
