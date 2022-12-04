@@ -83,5 +83,11 @@ public class ActorControl : MonoBehaviour
         playerInput.inputEnable = true;
         lockPlanar = false;
     }
+
+    public void OnFallEnter()
+    {
+        playerInput.inputEnable = true;
+        lockPlanar = false;
+    }
     #endregion
 }

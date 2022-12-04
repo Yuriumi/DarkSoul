@@ -682,7 +682,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   walkSpeed: 1.45
   runSpeedScale: 2.5
-  jumpForce: 5
+  jumpForce: 4
 --- !u!1 &1901606087
 GameObject:
   m_ObjectHideFlags: 0
