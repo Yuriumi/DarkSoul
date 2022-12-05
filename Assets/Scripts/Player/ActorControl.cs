@@ -98,7 +98,12 @@ public class ActorControl : MonoBehaviour
 
     public void OnRollEnter()
     {
-        rigidbody.AddForce((playerModel.transform.forward + playerModel.transform.up).normalized * jumpForce, ForceMode.Impulse);
+        rigidbody.AddForce((playerModel.transform.forward + playerModel.transform.up).normalized * rollForce, ForceMode.Impulse);
+    }
+
+    public void OnJabEnter()
+    {
+        rigidbody.AddForce((-playerModel.transform.forward + playerModel.transform.up).normalized * rollForce, ForceMode.Impulse);
     }
     #endregion
 }
