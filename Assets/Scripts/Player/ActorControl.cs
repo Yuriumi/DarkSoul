@@ -34,6 +34,13 @@ public class ActorControl : MonoBehaviour
         {
             animator.SetTrigger("roll");
         }
+        if (playerInput.attack)
+        {
+            if (CheckState("Ground"))
+            {
+                animator.SetTrigger("attack");
+            }
+        }
         if (playerInput.jump)
         {
             animator.SetTrigger("jump");
@@ -57,6 +64,11 @@ public class ActorControl : MonoBehaviour
         //moveVelocity.Set(movingVec.x, rigidbody.velocity.y, movingVec.z);
         //rigidbody.velocity = moveVelocity * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f);
         rigidbody.MovePosition(rigidbody.position += planarVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
+    }
+
+    private bool CheckState(string stateName, string layerName = "Base Layer")
+    {
+        return animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex(layerName)).IsName(stateName);
     }
 
     #region Message block
@@ -89,6 +101,10 @@ public class ActorControl : MonoBehaviour
         lockPlanar = false;
     }
 
+    public void OnAttack1hAUpdate()
+    {
+        
+    }
     public void OnFallEnter()
     {
         playerInput.inputEnable = true;
@@ -103,6 +119,21 @@ public class ActorControl : MonoBehaviour
     public void OnJabEnter()
     {
         rigidbody.AddForce((-playerModel.transform.forward + playerModel.transform.up).normalized * rollForce, ForceMode.Impulse);
+    }
+
+    public void OnAttack1hAEnter()
+    {
+        playerInput.inputEnable = false;
+        lockPlanar = true;
+        animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1.0f);
+        rigidbody.AddForce(playerModel.transform.forward, ForceMode.Impulse);
+    }
+
+    public void OnAttackIdle()
+    {
+        playerInput.inputEnable = true;
+        lockPlanar = false;
+        animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0f);
     }
     #endregion
 }

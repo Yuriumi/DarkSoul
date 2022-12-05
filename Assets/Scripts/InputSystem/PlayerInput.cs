@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     public string keyRun;
     public string keyJump;
-    public string keyC;
+    public string keyAttack;
     public string keyD;
 
     public string keyJUp;
@@ -32,6 +32,7 @@ public class PlayerInput : MonoBehaviour
     public bool run;
     // 2.trigger once signal
     public bool jump;
+    public bool attack;
     // 3.double trigger
 
     [Header("==== Other ====")]
@@ -72,5 +73,6 @@ public class PlayerInput : MonoBehaviour
         run = Input.GetKey(keyRun);
 
         jump = Input.GetKeyDown(keyJump);
+        attack = Input.GetKeyDown(keyAttack);
     }
 }
