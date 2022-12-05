@@ -124,7 +124,6 @@ public class ActorControl : MonoBehaviour
     public void OnAttack1hAEnter()
     {
         playerInput.inputEnable = false;
-        lockPlanar = true;
         animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 1.0f);
         rigidbody.AddForce(playerModel.transform.forward, ForceMode.Impulse);
     }
@@ -132,7 +131,6 @@ public class ActorControl : MonoBehaviour
     public void OnAttackIdle()
     {
         playerInput.inputEnable = true;
-        lockPlanar = false;
         animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0f);
     }
     #endregion
