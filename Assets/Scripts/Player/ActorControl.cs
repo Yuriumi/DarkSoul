@@ -15,6 +15,7 @@ public class ActorControl : MonoBehaviour
     private Vector3 moveVelocity;
     private float targetRunScale;
     [SerializeField] private float jumpForce = 5;
+    [SerializeField] private float rollForce = 2;
 
     private bool lockPlanar = false;
 
@@ -29,6 +30,11 @@ public class ActorControl : MonoBehaviour
     {
         targetRunScale = playerInput.run ? runSpeedScale : 1.0f;
         animator.SetFloat("forward", playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"),targetRunScale,0.1f));
+        Debug.Log(playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"), targetRunScale, 0.1f));
+        if (rigidbody.velocity.magnitude > 5.0f)
+        {
+            animator.SetTrigger("roll");
+        }
         if (playerInput.jump)
         {
             animator.SetTrigger("jump");
@@ -88,6 +94,11 @@ public class ActorControl : MonoBehaviour
     {
         playerInput.inputEnable = true;
         lockPlanar = false;
+    }
+
+    public void OnRollEnter()
+    {
+        rigidbody.AddForce((playerModel.transform.forward + playerModel.transform.up).normalized * jumpForce, ForceMode.Impulse);
     }
     #endregion
 }
