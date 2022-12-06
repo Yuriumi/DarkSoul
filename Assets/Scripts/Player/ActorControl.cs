@@ -48,6 +48,8 @@ public class ActorControl : MonoBehaviour
             animator.SetTrigger("jump");
         }
 
+        animator.SetBool("defense", playerInput.defense);
+
         if (playerInput.Dmag > 0.1f)
         {
             playerModel.transform.forward = Vector3.Slerp(playerModel.transform.forward, playerInput.Dvec, 0.1f);

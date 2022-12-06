@@ -13,7 +13,7 @@ public class PlayerInput : MonoBehaviour
     public string keyRun;
     public string keyJump;
     public string keyAttack;
-    public string keyD;
+    public string keyDefense;
 
     public string keyJUp;
     public string keyJLeft;
@@ -30,6 +30,7 @@ public class PlayerInput : MonoBehaviour
 
     // 1.Pressing singnal
     public bool run;
+    public bool defense;
     // 2.trigger once signal
     public bool jump;
     public bool attack;
@@ -63,6 +64,8 @@ public class PlayerInput : MonoBehaviour
             targetDup = 0f;
             targetDright = 0f;
         }
+
+        defense = Input.GetKey(keyDefense);
 
         Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, smoothTime);
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, smoothTime);
