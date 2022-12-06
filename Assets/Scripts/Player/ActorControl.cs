@@ -19,6 +19,8 @@ public class ActorControl : MonoBehaviour
 
     private bool lockPlanar = false;
 
+    private Vector3 animDelta;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -29,7 +31,7 @@ public class ActorControl : MonoBehaviour
     private void Update()
     {
         targetRunScale = playerInput.run ? runSpeedScale : 1.0f;
-        animator.SetFloat("forward", playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"),targetRunScale,0.1f));
+        animator.SetFloat("forward", playerInput.Dmag * Mathf.Lerp(animator.GetFloat("forward"), targetRunScale, 0.1f));
         if (rigidbody.velocity.magnitude > 5.0f)
         {
             animator.SetTrigger("roll");
@@ -63,7 +65,9 @@ public class ActorControl : MonoBehaviour
     {
         //moveVelocity.Set(movingVec.x, rigidbody.velocity.y, movingVec.z);
         //rigidbody.velocity = moveVelocity * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f);
+        rigidbody.position += animDelta;
         rigidbody.MovePosition(rigidbody.position += planarVec * Time.fixedDeltaTime * walkSpeed * (playerInput.run ? runSpeedScale : 1.0f));
+        animDelta = Vector3.zero;
     }
 
     private bool CheckState(string stateName, string layerName = "Base Layer")
@@ -78,7 +82,7 @@ public class ActorControl : MonoBehaviour
         lockPlanar = true;
         rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
-    
+
     //public void OnJumpExit()
     //{
     //    playerInput.inputEnable = true;
@@ -89,7 +93,7 @@ public class ActorControl : MonoBehaviour
     {
         animator.SetBool("isGround", true);
     }
-    
+
     public void IsNotGround()
     {
         animator.SetBool("isGround", false);
@@ -103,7 +107,7 @@ public class ActorControl : MonoBehaviour
 
     public void OnAttack1hAUpdate()
     {
-        
+
     }
     public void OnFallEnter()
     {
@@ -132,6 +136,12 @@ public class ActorControl : MonoBehaviour
     {
         playerInput.inputEnable = true;
         animator.SetLayerWeight(animator.GetLayerIndex("Attack"), 0f);
+    }
+
+    public void OnUpdateRM(object _deltaPos)
+    {
+        if (CheckState("Attack1hC", "Attack"))
+            animDelta += (Vector3)_deltaPos;
     }
     #endregion
 }
